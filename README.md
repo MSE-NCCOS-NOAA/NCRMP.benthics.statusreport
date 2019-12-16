@@ -1,5 +1,5 @@
 # Introduction
-Calculates and compiles the 2020 NCRMP Status Report benthic indicator scores
+Calculates and compiles the 2020 Atlantic NCRMP Status Report benthic indicator scores. 
 
 # Installation 
 ```
