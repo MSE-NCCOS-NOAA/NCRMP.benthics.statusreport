@@ -54,6 +54,7 @@ NCRMP_make_weighted_LPI_Zscores_GOM_Carib <- function(input_ref, input_current, 
 
     # Create NTOT
     ntot <- USVI_2017_NTOT %>%
+      dplyr::ungroup() %>%
       dplyr::mutate(reef_cat = if_else(HABITAT_CD == "AGRF", "High coral",
                                        if_else(HABITAT_CD == "PTRF", "High coral",
                                                if_else(HABITAT_CD == "BDRK", "High coral",
@@ -80,6 +81,7 @@ NCRMP_make_weighted_LPI_Zscores_GOM_Carib <- function(input_ref, input_current, 
 
     # Create NTOT
     ntot <- USVI_2017_NTOT %>%
+      dplyr::ungroup() %>%
       dplyr::mutate(reef_cat = if_else(HABITAT_CD == "AGRF", "High coral",
                                        if_else(HABITAT_CD == "PTRF", "High coral",
                                                if_else(HABITAT_CD == "BDRK", "High coral",

@@ -157,6 +157,7 @@ NCRMP_make_weighted_LPI_data <- function(inputdata, region, year)
     if(year == 2013){
 
       ntot <- USVI_2017_NTOT %>%
+        dplyr::ungroup() %>%
         dplyr::filter(REGION == "STTSTJ",
                       STRAT != "HARD_SHLW") %>% # Hard shlw was not sampled in 2013
         dplyr::group_by(REGION, YEAR, STRAT, HABITAT_CD, DEPTH_STRAT) %>%
@@ -171,6 +172,7 @@ NCRMP_make_weighted_LPI_data <- function(inputdata, region, year)
     if(year == 2015){
 
       ntot <- USVI_2017_NTOT %>%
+        dplyr::ungroup() %>%
         dplyr::filter(REGION == "STTSTJ") %>%
         dplyr::group_by(REGION, YEAR, STRAT, HABITAT_CD, DEPTH_STRAT) %>%
         dplyr::summarise(NTOT = sum(NTOT)) %>%
@@ -184,6 +186,7 @@ NCRMP_make_weighted_LPI_data <- function(inputdata, region, year)
     if(year == 2017){
 
       ntot <- USVI_2017_NTOT %>%
+        dplyr::ungroup() %>%
         dplyr::filter(REGION == "STTSTJ") %>%
         dplyr::group_by(REGION, YEAR, STRAT, HABITAT_CD, DEPTH_STRAT) %>%
         dplyr::summarise(NTOT = sum(NTOT)) %>%
@@ -201,6 +204,7 @@ NCRMP_make_weighted_LPI_data <- function(inputdata, region, year)
     if(year == 2015){
 
       ntot <- USVI_2017_NTOT %>%
+        dplyr::ungroup() %>%
         dplyr::filter(REGION == "STX",
                       STRAT != "HARD_SHLW", # Hard shlw was not sampled in 2015
                       STRAT != "HARD_DEEP") %>% # Hard deep was not sampled in 2015
@@ -215,6 +219,7 @@ NCRMP_make_weighted_LPI_data <- function(inputdata, region, year)
     if(year == 2017){
 
       ntot <- USVI_2017_NTOT %>%
+        dplyr::ungroup() %>%
         dplyr::filter(REGION == "STX",
                       STRAT != "HARD_SHLW") %>%
         dplyr::group_by(REGION, YEAR, STRAT, HABITAT_CD, DEPTH_STRAT) %>%

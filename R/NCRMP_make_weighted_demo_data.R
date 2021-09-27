@@ -101,7 +101,7 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
       tmp <- inputdata %>%
         dplyr::mutate(ANALYSIS_STRATUM = paste(STRAT, "/ PROT =", PROT, sep = " ")) %>%
         dplyr::group_by(YEAR, ANALYSIS_STRATUM) %>%
-        dplyr::summarise(N = length(ANALYSIS_STRATUM))
+        dplyr::summarise(N = length(ANALYSIS_STRATUM), .groups = "keep")
 
       # Make a list of all the years
       Years <- sort(unique(tmp$YEAR))
@@ -367,10 +367,11 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
   if(region == "STTSTJ"){
 
     ntot13 <- USVI_2017_NTOT %>%
+      dplyr::ungroup() %>%
       dplyr::filter(REGION == "STTSTJ",
                     STRAT != "HARD_SHLW") %>% # Hard shlw was not sampled in 2013
       dplyr::group_by(REGION, YEAR, STRAT, HABITAT_CD, DEPTH_STRAT) %>%
-      dplyr::summarise(NTOT = sum(NTOT)) %>%
+      dplyr::summarise(NTOT = sum(NTOT), .groups = "keep") %>%
       dplyr::ungroup() %>%
       dplyr::mutate(YEAR = 2013,
                     ANALYSIS_STRATUM = STRAT,
@@ -378,9 +379,10 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
                     ngrtot = sum(NTOT))
 
     ntot15 <- USVI_2017_NTOT %>%
+      dplyr::ungroup() %>%
       dplyr::filter(REGION == "STTSTJ") %>%
       dplyr::group_by(REGION, YEAR, STRAT, HABITAT_CD, DEPTH_STRAT) %>%
-      dplyr::summarise(NTOT = sum(NTOT)) %>%
+      dplyr::summarise(NTOT = sum(NTOT), .groups = 'keep') %>%
       dplyr::ungroup() %>%
       dplyr::mutate(YEAR = 2015,
                     ANALYSIS_STRATUM = STRAT,
@@ -389,9 +391,10 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
       dplyr::ungroup()
 
     ntot17 <- USVI_2017_NTOT %>%
+      dplyr::ungroup() %>%
       dplyr::filter(REGION == "STTSTJ") %>%
       dplyr::group_by(REGION, YEAR, STRAT, HABITAT_CD, DEPTH_STRAT) %>%
-      dplyr::summarise(NTOT = sum(NTOT)) %>%
+      dplyr::summarise(NTOT = sum(NTOT), .groups = 'keep') %>%
       dplyr::ungroup() %>%
       dplyr::mutate(ANALYSIS_STRATUM = STRAT,
                     PROT = NA_character_,
@@ -406,11 +409,12 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
   if(region == "STX"){
 
     ntot15 <- USVI_2017_NTOT %>%
+      dplyr::ungroup() %>%
       dplyr::filter(REGION == "STX",
                     STRAT != "HARD_SHLW", # Hard shlw was not sampled in 2015
                     STRAT != "HARD_DEEP") %>% # Hard deep was not sampled in 2015
       dplyr::group_by(REGION, YEAR, STRAT, HABITAT_CD, DEPTH_STRAT) %>%
-      dplyr::summarise(NTOT = sum(NTOT)) %>%
+      dplyr::summarise(NTOT = sum(NTOT), .groups = 'keep') %>%
       dplyr::ungroup() %>%
       dplyr::mutate(YEAR = 2015,
                     ANALYSIS_STRATUM = STRAT,
@@ -418,10 +422,11 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
                     ngrtot = sum(NTOT))
 
     ntot17 <- USVI_2017_NTOT %>%
+      dplyr::ungroup() %>%
       dplyr::filter(REGION == "STX",
                     STRAT != "HARD_SHLW") %>%
       dplyr::group_by(REGION, YEAR, STRAT, HABITAT_CD, DEPTH_STRAT) %>%
-      dplyr::summarise(NTOT = sum(NTOT)) %>%
+      dplyr::summarise(NTOT = sum(NTOT), .groups = 'keep') %>%
       dplyr::ungroup() %>%
       dplyr::mutate(ANALYSIS_STRATUM = STRAT,
                     PROT = NA_character_,
@@ -437,7 +442,7 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
       dplyr::filter(STRAT != "HARD_DEEP", # Hard shlw was not sampled in 2014
                     STRAT != "HARD_SHLW") %>% # Hard deep was not sampled in 2014
       dplyr::group_by(REGION, YEAR, STRAT, HABITAT_CD, DEPTH_STRAT) %>%
-      dplyr::summarise(NTOT = sum(NTOT)) %>%
+      dplyr::summarise(NTOT = sum(NTOT), .groups = 'keep') %>%
       dplyr::ungroup() %>%
       dplyr::mutate(YEAR = 2014,
                     ANALYSIS_STRATUM = STRAT,
@@ -446,7 +451,7 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
 
     ntot16 <- PRICO_2016_NTOT %>%
       dplyr::group_by(REGION, YEAR, STRAT, HABITAT_CD, DEPTH_STRAT) %>%
-      dplyr::summarise(NTOT = sum(NTOT)) %>%
+      dplyr::summarise(NTOT = sum(NTOT), .groups = 'keep') %>%
       dplyr::ungroup() %>%
       dplyr::mutate(ANALYSIS_STRATUM = STRAT,
                     PROT = NA_character_,
@@ -464,7 +469,7 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
                     YEAR = 2013) %>%
       dplyr::group_by(REGION, YEAR, ANALYSIS_STRATUM, DEPTH, PROT) %>%
       dplyr::summarise(NTOT = sum(NTOT),
-                       ngrtot = sum(NTOT)) %>%
+                       ngrtot = sum(NTOT), .groups = 'keep') %>%
       dplyr::ungroup()
 
 
@@ -475,7 +480,7 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
                     YEAR = 2015) %>%
       dplyr::group_by(REGION, YEAR, ANALYSIS_STRATUM, DEPTH, PROT) %>%
       dplyr::summarise(NTOT = sum(NTOT),
-                       ngrtot = sum(NTOT)) %>%
+                       ngrtot = sum(NTOT), .groups = 'keep') %>%
       dplyr::ungroup()
 
     ntot18 <- FGBNMS_2018_NTOT %>%
@@ -483,7 +488,7 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
                     PROT = NA_character_) %>%
       dplyr::group_by(REGION, YEAR, ANALYSIS_STRATUM, DEPTH, PROT) %>%
       dplyr::summarise(NTOT = sum(NTOT),
-                       ngrtot = sum(NTOT)) %>%
+                       ngrtot = sum(NTOT), .groups = 'keep') %>%
       dplyr::ungroup()
 
     ntot <- rbind(ntot13, ntot15, ntot18)
@@ -658,7 +663,8 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
           dplyr::mutate(Var=svar/n, #variance of mean density in stratum
                         std = sqrt(svar), # std dev of density in stratum
                         SE=sqrt(Var), #SE of the mean density in stratum
-                        CV_perc=(SE/avden)*100)
+                        CV_perc=(SE/avden)*100)%>%
+          dplyr::ungroup()
 
         density_est <- density_est %>%
           # Merge ntot with coral_est_spp
@@ -722,7 +728,7 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
             # compute stratum variance
             svar = var(DENSITY),
             # calculate N
-            n = length(unique(PRIMARY_SAMPLE_UNIT))) %>%
+            n = length(unique(PRIMARY_SAMPLE_UNIT)), .groups = "keep") %>%
           # convert 0 for stratum variance so that the sqrt is a small # but not a 0
           dplyr::mutate(svar = dplyr::case_when(svar == 0 ~ 0.00000001,
                                                 TRUE ~ svar)) %>%
@@ -743,15 +749,15 @@ NCRMP_make_weighted_demo_data <- function(project, inputdata, region, datatype, 
         # calculate species CVS
         strata_CV <- species_data %>%
           dplyr::mutate(ANALYSIS_STRATUM = paste(STRAT, "/ PROT =", PROT, sep = " ")) %>%
-          group_by(YEAR, SPECIES_CD, ANALYSIS_STRATUM, STRAT, PROT) %>%
-          summarize(mean=mean(DENSITY),
+          dplyr::group_by(YEAR, SPECIES_CD, ANALYSIS_STRATUM, STRAT, PROT) %>%
+          dplyr::summarize(mean=mean(DENSITY),
                     svar=var(DENSITY),
                     N_species=length(DENSITY)) %>% # sample variance of density in stratum
-          mutate(svar=dplyr::case_when(svar==0 ~ 0.00000001, # replace zeros with very small number
+          dplyr::mutate(svar=dplyr::case_when(svar==0 ~ 0.00000001, # replace zeros with very small number
                                        TRUE ~ svar)) %>%
           dplyr::left_join(., density_est %>% dplyr::select(YEAR, ANALYSIS_STRATUM, n)) %>%
 
-          mutate(Var=svar/n, #variance of mean density in stratum
+          dplyr::mutate(Var=svar/n, #variance of mean density in stratum
                  std = sqrt(svar), # std dev of density in stratum
                  SE=sqrt(Var), #SE of the mean density in stratum
                  CV_perc=(SE/mean)*100)

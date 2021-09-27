@@ -939,6 +939,7 @@ NCRMP_SR_calculate_current_values <- function(region, datatype , indicator = "NU
 
     # Create NTOT
     ntot <- USVI_2017_NTOT %>%
+      dplyr::ungroup() %>%
       dplyr::mutate(reef_cat = dplyr::if_else(HABITAT_CD == "AGRF", "High coral",
                                               dplyr::if_else(HABITAT_CD == "PTRF", "High coral",
                                                              dplyr::if_else(HABITAT_CD == "BDRK", "High coral",
@@ -1220,6 +1221,7 @@ NCRMP_SR_calculate_current_values <- function(region, datatype , indicator = "NU
 
     # Create NTOT
     ntot <- USVI_2017_NTOT %>%
+      dplyr::ungroup() %>%
       dplyr::mutate(reef_cat = dplyr::if_else(HABITAT_CD == "AGRF", "High coral",
                                               dplyr::if_else(HABITAT_CD == "PTRF", "High coral",
                                                              dplyr::if_else(HABITAT_CD == "BDRK", "High coral",
