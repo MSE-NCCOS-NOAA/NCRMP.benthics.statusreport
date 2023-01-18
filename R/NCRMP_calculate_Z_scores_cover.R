@@ -76,7 +76,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       cover_group == indicator
                       ) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
     }
     if(indicator == "MACROALGAE"){
@@ -89,8 +90,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
         dplyr::group_by(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group) %>%
         dplyr::summarise(Percent_Cvr = mean(Percent_Cvr)) %>%
         dplyr::ungroup() %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
-
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
       dat_current <- NCRMP_SEFCRI_2014_18_percent_cover_site %>%
 
@@ -98,8 +99,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       YEAR >= min_year_current,
                       cover_group == indicator) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
-
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
     }
 
     if(indicator == "CCA"){
@@ -112,8 +113,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
         dplyr::group_by(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group) %>%
         dplyr::summarise(Percent_Cvr = mean(Percent_Cvr)) %>%
         dplyr::ungroup() %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
-
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
       dat_current <- NCRMP_SEFCRI_2014_18_percent_cover_site %>%
 
@@ -122,6 +123,7 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       cover_group == indicator) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
         dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
     }
 
@@ -141,7 +143,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
         dplyr::group_by(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT, reef_cat, HABITAT_CD, PROT, cover_group) %>%
         dplyr::summarise(Percent_Cvr = mean(Percent_Cvr)) %>%
         dplyr::ungroup() %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
       dat_current <- NCRMP_FLK_2014_18_percent_cover_site %>%
@@ -157,7 +160,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       cover_group == indicator,
                       reef_cat == reef_type) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT, reef_cat, HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
     } else {
 
@@ -169,7 +173,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
         dplyr::group_by(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group) %>%
         dplyr::summarise(Percent_Cvr = mean(Percent_Cvr)) %>%
         dplyr::ungroup() %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
       dat_current <- NCRMP_FLK_2014_18_percent_cover_site %>%
@@ -178,7 +183,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       YEAR >= min_year_current,
                       cover_group == indicator) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
     }
 
   }
@@ -198,7 +204,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
         dplyr::group_by(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT, reef_cat, HABITAT_CD, PROT, cover_group) %>%
         dplyr::summarise(Percent_Cvr = mean(Percent_Cvr)) %>%
         dplyr::ungroup() %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
       dat_current <- NCRMP_Tort_2014_18_percent_cover_site %>%
@@ -216,7 +223,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       cover_group == indicator,
                       reef_cat == reef_type) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT, reef_cat, HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
     } else {
 
@@ -228,7 +236,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
         dplyr::group_by(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group) %>%
         dplyr::summarise(Percent_Cvr = mean(Percent_Cvr)) %>%
         dplyr::ungroup() %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
       dat_current <-  NCRMP_Tort_2014_18_percent_cover_site %>%
@@ -237,7 +246,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       YEAR >= min_year_current,
                       cover_group == indicator) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
     }
@@ -268,7 +278,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
         dplyr::group_by(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, reef_cat, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group) %>%
         dplyr::summarise(Percent_Cvr = mean(Percent_Cvr)) %>%
         dplyr::ungroup() %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
       dat_current <- NCRMP_STTSTJ_2013_17_percent_cover_site %>%
@@ -286,7 +297,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       reef_cat == reef_type
         ) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, reef_cat, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
     }
 
@@ -306,7 +318,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       cover_group == indicator,
                       reef_cat == reef_type) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, reef_cat, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, Percent_Cvr) %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
       dat_current <- NCRMP_STTSTJ_2013_17_percent_cover_site %>%
@@ -323,7 +336,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       reef_cat == reef_type) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, reef_cat, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
 
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
     }
@@ -353,7 +367,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
         dplyr::group_by(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, reef_cat, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group) %>%
         dplyr::summarise(Percent_Cvr = mean(Percent_Cvr)) %>%
         dplyr::ungroup() %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
       dat_current <- NCRMP_STX_2015_17_percent_cover_site %>%
@@ -371,7 +386,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       reef_cat == reef_type
         ) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, reef_cat, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
     }
 
@@ -391,7 +407,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       cover_group == indicator,
                       reef_cat == reef_type) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, reef_cat, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, Percent_Cvr) %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
       dat_current <- NCRMP_STX_2015_17_percent_cover_site %>%
@@ -408,7 +425,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                       reef_cat == reef_type) %>%
         dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, reef_cat, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
 
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
     }
@@ -428,7 +446,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
       dplyr::group_by(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group) %>%
       dplyr::summarise(Percent_Cvr = mean(Percent_Cvr)) %>%
       dplyr::ungroup() %>%
-      dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+      #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+      dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
     dat_current <- NCRMP_PRICO_2014_16_percent_cover_site %>%
@@ -437,7 +456,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                     YEAR >= min_year_current,
                     cover_group == indicator) %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group, n, Percent_Cvr) %>%
-      dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+      #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+      dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
   }
 
@@ -458,7 +478,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                                        YEAR >= min_year_ref,
                                        cover_group == indicator) %>%
                          dplyr::mutate(PRIMARY_SAMPLE_UNIT = as.factor(as.character(PRIMARY_SAMPLE_UNIT)))) %>%
-      dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+      #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+      dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
     dat_current <- FGBNMS_1992_18_percent_cover_site %>%
@@ -474,7 +495,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
                                        YEAR >= min_year_current,
                                        cover_group == indicator) %>%
                          dplyr::mutate(PRIMARY_SAMPLE_UNIT = as.factor(as.character(PRIMARY_SAMPLE_UNIT)))) %>%
-      dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+      #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+      dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
 
   }
@@ -503,7 +525,7 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
   # unpack list
   for(k in 1:length(tmp))assign(names(tmp)[k], tmp[[k]])
 
-
+password = "test"
 
   ################
   # Export
