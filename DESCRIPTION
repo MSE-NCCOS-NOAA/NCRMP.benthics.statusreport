@@ -1,10 +1,10 @@
 Package: NCRMP.benthics.statusreport
 Type: Package
-Title: Computes NCRMP benthic indicator scores for the 2020 Status Report
+Title: Computes NCRMP benthic indicator scores for the 2020 Status Report 
 Version: 1.0.0.0000
-Author: c(person("Sarah", "Groves", email = "sarah.groves@noaa.gov", role = c("cre", "cur")))
+Author: c(person("Sarah", "Groves", email = "sarah.groves@noaa.gov", role = c("cre", "ctb")))
 Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+    Use four spaces when indenting paragraphs within the Description. 
 Depends: R (>= 3.5.0)
 License: What license is it under?
 Encoding: UTF-8
@@ -18,3 +18,4 @@ Suggests: knitr,
           rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
+

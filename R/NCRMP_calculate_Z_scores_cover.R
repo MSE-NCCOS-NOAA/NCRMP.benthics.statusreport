@@ -525,7 +525,6 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
   # unpack list
   for(k in 1:length(tmp))assign(names(tmp)[k], tmp[[k]])
 
-password = "test"
 
   ################
   # Export
