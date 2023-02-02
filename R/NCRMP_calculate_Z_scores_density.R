@@ -22,7 +22,7 @@
 
 
 # NCRMP Caribbean Benthic analytics team: Groves, Viehman
-# Last update: Dec 2019
+# Last update: Jan 2023
 
 
 ##############################################################################################################################
@@ -84,7 +84,8 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
                     YEAR >= min_year_current) %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, STRAT,  PROT, DENSITY) %>%
 
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value)))
 
 
   }
@@ -107,7 +108,9 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
                     REGION == "FLK") %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, STRAT,  PROT, DENSITY) %>%
 
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value)))
+
 
 
     tmp <- NCRMP_DRM_calculate_colony_density(project = "NCRMP_DRM",
@@ -123,7 +126,8 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
                     YEAR >= min_year_current) %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, STRAT, PROT, DENSITY) %>%
 
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value)))
 
 
   }
@@ -146,7 +150,8 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
                     REGION == "Tortugas") %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, STRAT, PROT, DENSITY) %>%
 
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value)))
 
 
     tmp <- NCRMP_DRM_calculate_colony_density(project = "NCRMP_DRM",
@@ -162,7 +167,8 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
                     YEAR >= min_year_current) %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, STRAT, PROT, DENSITY) %>%
 
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value)))
 
 
   }
@@ -195,7 +201,8 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
       ) %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, STRAT, reef_cat, DENSITY) %>%
 
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value)))
 
 
     dat_current <- NCRMP_STTSTJ_2013_17_density_site %>%
@@ -213,7 +220,8 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
       ) %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, STRAT, reef_cat, DENSITY) %>%
 
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value)))
 
 
   }
@@ -244,7 +252,8 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
       ) %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, STRAT, reef_cat, DENSITY) %>%
 
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value)))
 
 
     dat_current <- NCRMP_STX_2015_17_density_site %>%
@@ -262,7 +271,8 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
       ) %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, STRAT, reef_cat, DENSITY) %>%
 
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value)))
 
 
 
@@ -271,7 +281,7 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
 
   if(region == "PRICO"){
 
-      # Create filtered site level NCRMP data which is not stored in package
+    # Create filtered site level NCRMP data which is not stored in package
 
     tmp <- NCRMP_DRM_calculate_colony_density(project = "NCRMP",
                                               region = "PRICO",
@@ -280,19 +290,21 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
     NCRMP_PRICO_2014_16_density_site <- tmp$density_site
 
     dat_ref <- NCRMP_PRICO_2014_16_density_site %>%
-           dplyr::filter(YEAR <= max_year_ref,
+      dplyr::filter(YEAR <= max_year_ref,
                     YEAR >= min_year_ref) %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, STRAT, DENSITY) %>%
 
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value)))
 
 
     dat_current <- NCRMP_PRICO_2014_16_density_site %>%
-         dplyr::filter(YEAR <= max_year_current,
+      dplyr::filter(YEAR <= max_year_current,
                     YEAR >= min_year_current) %>%
       dplyr::select(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, STRAT, DENSITY) %>%
 
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std))
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value)))
 
 
   }
@@ -319,7 +331,9 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
                          dplyr::filter(YEAR <= max_year_ref,
                                        YEAR >= min_year_ref) %>%
                          dplyr::mutate(PRIMARY_SAMPLE_UNIT = as.factor(as.character(PRIMARY_SAMPLE_UNIT)))) %>%
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std)) %>%
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std)) %>%
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value))) %>%
+
       dplyr::ungroup()
 
 
@@ -334,7 +348,8 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
                          dplyr::filter(YEAR <= max_year_current,
                                        YEAR >= min_year_current) %>%
                          dplyr::mutate(PRIMARY_SAMPLE_UNIT = as.factor(as.character(PRIMARY_SAMPLE_UNIT)))) %>%
-      dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std)) %>%
+      #dplyr::mutate(DENSITY = ((DENSITY - reference_value)/std)) %>%
+      dplyr::mutate(DENSITY = ((DENSITY - reference_value))) %>%
       dplyr::ungroup()
 
   }
@@ -362,7 +377,7 @@ NCRMP_calculate_Z_scores_density <- function(region, min_year_ref, max_year_ref,
   # unpack list
   for(k in 1:length(tmp))assign(names(tmp)[k], tmp[[k]])
 
-#test
+  #test
   ################
   # Export
   ################

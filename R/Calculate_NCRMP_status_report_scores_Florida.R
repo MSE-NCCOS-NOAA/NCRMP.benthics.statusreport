@@ -27,7 +27,7 @@
 
 
 # NCRMP Caribbean Benthic analytics team: Groves, Viehman
-# Last update: Dec 2019
+# Last update: Jan 2023
 
 
 ##############################################################################################################################
@@ -84,26 +84,46 @@ tmp <- NCRMP_calculate_Z_scores_density(region = "SEFCRI",
                                       reference_value = SEFCRI_ref_val$avDen,
                                       std = SEFCRI_ref_val$std)
 
+### Jan 2023 updates based on Steve Smith for BMS manuscript. Z scores have been changes to "difference" scores and reference mean is set to 0 (previously it was very, very close to 0)
+# Set your Z reference value
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(den = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(den, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(den = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(den, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'den', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'den', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'den', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
 
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
 ref_var <- reference$Var
 ref_n <- reference$n_sites
-
+ref_strat <- reference$n_strat
 # Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
 d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
-
+d$ref_strat <- ref_strat
 # Set the reference and current actual cover values
 
 d$Reference_Den <- SEFCRI_ref_val$avDen
 d$Current_Den <- SEFCRI_current_val$avDen
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 d$alpha_05 <- 0.05
 d$t_value_95  <- abs(qt(d$alpha_05/2, d$df))
@@ -176,17 +196,39 @@ tmp <- NCRMP_calculate_Z_scores_mortality(region = "SEFCRI",
                                       std = SEFCRI_ref_val$std)
 
 
+### Jan 2023 updates based on Steve Smith for BMS manuscript. Z scores have been changes to "difference" scores and reference mean is set to 0 (previously it was very, very close to 0)
+# Set your Z reference value
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(mort = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(mort, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(mort = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(mort, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'mort', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'mort', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'mort', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
+
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
 ref_var <- reference$Var
 ref_n <- reference$n_sites
-
+ref_strat <- reference$n_strat
 # Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
 d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual cover values
 
@@ -194,7 +236,7 @@ d$Reference_Mort <- SEFCRI_ref_val$avMort
 d$Current_Mort <- SEFCRI_current_val$avMort
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 d$alpha_05 <- 0.05
 d$t_value_95  <- abs(qt(d$alpha_05/2, d$df))
@@ -260,18 +302,39 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "SEFCRI",
                                       reference_value = SEFCRI_ref_val$avCvr,
                                       std = SEFCRI_ref_val$std)
 
+### Jan 2023 updates based on Steve Smith for BMS manuscript. Z scores have been changes to "difference" scores and reference mean is set to 0 (previously it was very, very close to 0)
+# Set your Z reference value
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
 
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
 ref_var <- reference$Var
 ref_n <- reference$n_sites
-
+ref_strat <- reference$n_strat
 # Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
 d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual cover values
 
@@ -356,12 +419,39 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "SEFCRI",
                                       reference_value = SEFCRI_ref_val$avCvr,
                                       std = SEFCRI_ref_val$std)
 
+### Jan 2023 updates based on Steve Smith for BMS manuscript. Z scores have been changes to "difference" scores and reference mean is set to 0 (previously it was very, very close to 0)
+# Set your Z reference value
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
 
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
 ref_var <- reference$Var
 ref_n <- reference$n_sites
+ref_strat <- reference$n_strat
+# Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
+d <- tmp$Domain_est_Z_current
+d$ref_Z <- ref_val
+d$ref_Z_Var <- ref_var
+d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
 d <- tmp$Domain_est_Z_current
@@ -454,18 +544,45 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "SEFCRI",
                                       std = SEFCRI_ref_val$std)
 
 
+### Jan 2023 updates based on Steve Smith for BMS manuscript. Z scores have been changes to "difference" scores and reference mean is set to 0 (previously it was very, very close to 0)
+# Set your Z reference value
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
+
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
 ref_var <- reference$Var
 ref_n <- reference$n_sites
+ref_strat <- reference$n_strat
+# Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
+d <- tmp$Domain_est_Z_current
+d$ref_Z <- ref_val
+d$ref_Z_Var <- ref_var
+d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
 d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
-
 # Set the reference and current actual cover values
 
 d$Reference_Cvr <- SEFCRI_ref_val$avCvr
@@ -567,17 +684,39 @@ tmp <- NCRMP_calculate_Z_scores_density(region = "FLK",
                                         std = FLK_ref_val$std)
 
 
+### Jan 2023 updates based on Steve Smith for BMS manuscript. Z scores have been changes to "difference" scores and reference mean is set to 0 (previously it was very, very close to 0)
+# Set your Z reference value
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(den = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(den, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(den = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(den, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'den', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'den', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'den', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
+
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
 ref_var <- reference$Var
 ref_n <- reference$n_sites
-
+ref_strat <- reference$n_strat
 # Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
 d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual values
 
@@ -585,7 +724,7 @@ d$Reference_Den <- FLK_ref_val$avDen
 d$Current_Den <- FLK_current_val$avDen
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 d$alpha_05 <- 0.05
 d$t_value_95  <- abs(qt(d$alpha_05/2, d$df))
@@ -659,17 +798,39 @@ tmp <- NCRMP_calculate_Z_scores_mortality(region = "FLK",
                                           std = FLK_ref_val$std)
 
 
+### Jan 2023 updates based on Steve Smith for BMS manuscript. Z scores have been changes to "difference" scores and reference mean is set to 0 (previously it was very, very close to 0)
+# Set your Z reference value
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(mort = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(mort, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(mort = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(mort, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'mort', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'mort', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'mort', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
+
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
 ref_var <- reference$Var
 ref_n <- reference$n_sites
-
+ref_strat <- reference$n_strat
 # Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
 d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual cover values
 
@@ -677,7 +838,7 @@ d$Reference_Mort <- FLK_ref_val$avMort
 d$Current_Mort <- FLK_current_val$avMort
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 d$alpha_05 <- 0.05
 d$t_value_95  <- abs(qt(d$alpha_05/2, d$df))
@@ -755,6 +916,26 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "FLK",
                                       std = FLK_ref_val$std,
                                       reef_type = "bank")
 
+### Jan 2023 updates based on Steve Smith for BMS manuscript. Z scores have been changes to "difference" scores and reference mean is set to 0 (previously it was very, very close to 0)
+# Set your Z reference value
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
 
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
@@ -768,14 +949,14 @@ d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
-
+d$ref_strat <- ref_strat
 # Set the reference and current actual cover values
 
 d$Reference_Cvr <- FLK_ref_val$avCvr
 d$Current_Cvr <- FLK_current_val$avCvr
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 # Calculate 95% CI
 d$alpha_05 <- 0.05
@@ -856,6 +1037,27 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "FLK",
                                       reef_type = "patch")
 
 
+### Jan 2023 updates based on Steve Smith for BMS manuscript. Z scores have been changes to "difference" scores and reference mean is set to 0 (previously it was very, very close to 0)
+# Set your Z reference value
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
+
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
@@ -868,6 +1070,7 @@ d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual cover values
 
@@ -957,6 +1160,27 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "FLK",
                                       reef_type = "bank")
 
 
+### Jan 2023 updates based on Steve Smith for BMS manuscript. Z scores have been changes to "difference" scores and reference mean is set to 0 (previously it was very, very close to 0)
+# Set your Z reference value
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
+
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
@@ -969,6 +1193,7 @@ d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual cover values
 
@@ -976,7 +1201,7 @@ d$Reference_Cvr <- FLK_ref_val$avCvr
 d$Current_Cvr <- FLK_current_val$avCvr
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 # Calculate 95% CI
 d$alpha_05 <- 0.05
@@ -1057,6 +1282,25 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "FLK",
                                       reef_type = "patch")
 
 
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
+
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
@@ -1069,6 +1313,7 @@ d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual cover values
 
@@ -1076,7 +1321,7 @@ d$Reference_Cvr <- FLK_ref_val$avCvr
 d$Current_Cvr <- FLK_current_val$avCvr
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 # Calculate 95% CI
 d$alpha_05 <- 0.05
@@ -1155,17 +1400,38 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "FLK",
                                       std = FLK_ref_val$std)
 
 
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
+
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
 ref_var <- reference$Var
 ref_n <- reference$n_sites
+ref_strat <- reference$n_strat
 
 # Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
 d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual cover values
 
@@ -1173,7 +1439,7 @@ d$Reference_Cvr <- FLK_ref_val$avCvr
 d$Current_Cvr <- FLK_current_val$avCvr
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 # Calculate 95% CI
 d$alpha_05 <- 0.05
@@ -1271,18 +1537,38 @@ tmp <- NCRMP_calculate_Z_scores_density(region = "Tortugas",
                                         reference_value = Tortugas_ref_val$avDen,
                                         std = Tortugas_ref_val$std)
 
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(den = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(den, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(den = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(den, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'den', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'den', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'den', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
 
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
 ref_var <- reference$Var
 ref_n <- reference$n_sites
+ref_strat <- reference$n_strat
 
 # Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
 d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual cover values
 
@@ -1290,7 +1576,7 @@ d$Reference_Den <- Tortugas_ref_val$avDen
 d$Current_Den <- Tortugas_current_val$avDen
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 d$alpha_05 <- 0.05
 d$t_value_95  <- abs(qt(d$alpha_05/2, d$df))
@@ -1363,18 +1649,39 @@ tmp <- NCRMP_calculate_Z_scores_mortality(region = "Tortugas",
                                           reference_value = Tortugas_ref_val$avMort,
                                           std = Tortugas_ref_val$std)
 
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(mort = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(mort, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(mort = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(mort, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'mort', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'mort', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'mort', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
 
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
 ref_var <- reference$Var
 ref_n <- reference$n_sites
+ref_strat <- reference$n_strat
 
 # Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
 d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
+
 
 # Set the reference and current actual cover values
 
@@ -1382,7 +1689,7 @@ d$Reference_Mort <- Tortugas_ref_val$avMort
 d$Current_Mort <- Tortugas_current_val$avMort
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 d$alpha_05 <- 0.05
 d$t_value_95  <- abs(qt(d$alpha_05/2, d$df))
@@ -1462,6 +1769,25 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "Tortugas",
                                       reef_type = "mid/high")
 
 
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
+
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
@@ -1474,6 +1800,7 @@ d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual cover values
 
@@ -1481,7 +1808,7 @@ d$Reference_Cvr <- Tortugas_ref_val$avCvr
 d$Current_Cvr <- Tortugas_current_val$avCvr
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 # Calculate 95% CI
 d$alpha_05 <- 0.05
@@ -1562,6 +1889,25 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "Tortugas",
                                       reef_type = "low")
 
 
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
+
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
@@ -1574,6 +1920,7 @@ d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual cover values
 
@@ -1581,7 +1928,7 @@ d$Reference_Cvr <- Tortugas_ref_val$avCvr
 d$Current_Cvr <- Tortugas_current_val$avCvr
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - ref_strat
+d$df <- d$ref_n - d$ref_strat
 
 # Calculate 95% CI
 d$alpha_05 <- 0.05
@@ -1661,6 +2008,24 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "Tortugas",
                                       std = Tortugas_ref_val$std,
                                       reef_type = "NULL")
 
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
 
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
@@ -1674,14 +2039,14 @@ d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
-
+d$ref_strat <- ref_strat
 # Set the reference and current actual cover values
 
 d$Reference_Cvr <- Tortugas_ref_val$avCvr
 d$Current_Cvr <- Tortugas_current_val$avCvr
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 # Calculate 95% CI
 d$alpha_05 <- 0.05
@@ -1760,17 +2125,38 @@ tmp <- NCRMP_calculate_Z_scores_cover(region = "Tortugas",
                                       std = Tortugas_ref_val$std)
 
 
+reference <- tmp$Domain_est_Z_ref %>%
+  dplyr::mutate(cover = 0,
+                #Var = 1
+  ) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+current <- tmp$Domain_est_Z_current %>%
+  dplyr::mutate(cover = current_Z,
+                n_strat = strat_num) %>%
+  dplyr::select(cover, Var, n_sites, n_strat)
+
+dat <- dplyr::bind_rows(reference, current)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.05, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.01, F)
+
+two_tail_t_test(dataframe = dat, 'cover', 0.001, F) # in future, start here and work backwards bc if significant at 0.001, no need to keep going.
+
 # Set your Z reference value
 reference <- tmp$Domain_est_Z_ref
 ref_val <- reference$ref_Z
 ref_var <- reference$Var
 ref_n <- reference$n_sites
+ref_strat <- reference$n_strat
 
 # Set your Z current value - this becomes your current value which you are comparing to the distribution of your reference value
 d <- tmp$Domain_est_Z_current
 d$ref_Z <- ref_val
 d$ref_Z_Var <- ref_var
 d$ref_n <- ref_n
+d$ref_strat <- ref_strat
 
 # Set the reference and current actual cover values
 
@@ -1778,7 +2164,7 @@ d$Reference_Cvr <- Tortugas_ref_val$avCvr
 d$Current_Cvr <- Tortugas_current_val$avCvr
 
 # Add degrees of freedom (df), t-value, lower confidence interval (LCI) and upper confidence interval (UCI) to dataframe (d)
-d$df <- d$ref_n - 1
+d$df <- d$ref_n - d$ref_strat
 
 # Calculate 95% CI
 d$alpha_05 <- 0.05

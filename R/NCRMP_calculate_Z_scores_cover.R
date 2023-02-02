@@ -20,7 +20,7 @@
 
 
 # NCRMP Caribbean Benthic analytics team: Groves, Viehman
-# Last update: Dec 2019
+# Last update: Jan 2023
 
 
 ##############################################################################################################################
@@ -66,8 +66,8 @@ NCRMP_calculate_Z_scores_cover <- function(region, indicator, min_year_ref, max_
         dplyr::group_by(REGION, PRIMARY_SAMPLE_UNIT, SUB_REGION_NAME, ANALYSIS_STRATUM, STRAT,  HABITAT_CD, PROT, cover_group) %>%
         dplyr::summarise(Percent_Cvr = mean(Percent_Cvr)) %>%
         dplyr::ungroup() %>%
-        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
-
+        #dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)/std))
+        dplyr::mutate(Percent_Cvr = ((Percent_Cvr - reference_value)))
 
       dat_current <- NCRMP_SEFCRI_2014_18_percent_cover_site %>%
 
