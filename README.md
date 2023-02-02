@@ -1,6 +1,8 @@
 # Introduction
 Calculates and compiles the 2020 Atlantic NCRMP Status Report benthic indicator scores. The reports and associated methodology document can be found at, https://www.coris.noaa.gov/monitoring/status_report/.
 
+Citation: Groves SH. 2019. ncrmp.benthics.statusreport (R Package Version 1.0.0.001) [date accessed]. https://github.com/MSE-NCCOS-NOAA/NCRMP.benthics.statusreport
+
 # Installation 
 ```
 install.packages("devtools")
